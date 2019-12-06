@@ -24,7 +24,6 @@ public class player : entity
         {
             Jump();
         }
-        CheckCollision();
 
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
@@ -34,10 +33,68 @@ public class player : entity
             transform.position += Vector3.up * Time.deltaTime * currentJumpSpeed;// GRAVITY) ;
             currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
         }
+
+        CheckCollision();
+
+        Debug.Log("Am I Jumping?:" + jumping);
     }
 
     void CheckCollision()
     {
+        Vector2 newPosition = transform.position;
+        float widthOffset = (GetComponent<BoxCollider2D>().size.x / 2);
+
+        #region VERTICAL CHECKS
+        //Vector3 moveVector = Vector3.up * -1 * gravityDown * Time.deltaTime;
+        float ceilingRayDistance = .5f;
+        float floorRayDistance = .125f;
+
+        RaycastHit2D[] floorRaycasts = new RaycastHit2D[]
+        {
+            Physics2D.Raycast(transform.position + (Vector3.up * .5f), Vector2.down, ceilingRayDistance, terrainLayer),
+            Physics2D.Raycast(transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset*.9f), Vector2.down, ceilingRayDistance, terrainLayer),
+            Physics2D.Raycast(transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset*.9f), Vector2.down, ceilingRayDistance, terrainLayer)
+        };
+
+        float verticalOffset = 1.75f;
+        RaycastHit2D[] ceilingRaycasts = new RaycastHit2D[]
+        {
+            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset), Vector2.up, floorRayDistance, terrainLayer),
+            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset*.9f), Vector2.up, floorRayDistance, terrainLayer),
+            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset*.9f), Vector2.up, floorRayDistance, terrainLayer)
+        };
+        #region Debug Vertical Collisions
+        //Show Floor Collision Checks
+        Debug.DrawLine(transform.position + (Vector3.up * .5f), transform.position + (Vector3.up * .5f) + (Vector3.down * ceilingRayDistance), Color.red);
+        Debug.DrawLine(transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset * .9f) + (Vector3.down * ceilingRayDistance), Color.red);
+        Debug.DrawLine(transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset * .9f) + (Vector3.down * ceilingRayDistance), Color.red);
+        //Show Ceiling Collision Checks
+        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset), transform.position + (Vector3.up * verticalOffset) + (Vector3.up * ceilingRayDistance), Color.red);
+        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset * .9f) + (Vector3.up * ceilingRayDistance), Color.red);
+        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset * .9f) + (Vector3.up * ceilingRayDistance), Color.red);
+
+        #endregion
+
+        RaycastHit2D hit = floorRaycasts.FirstOrDefault(ray => ray.collider != null);
+        if (hit && currentJumpSpeed <= 0)
+        {
+            newPosition = new Vector2(transform.position.x, hit.point.y);
+            transform.position = newPosition;
+
+            jumping = false;
+            currentJumpSpeed = 0;
+        }
+        hit = ceilingRaycasts.FirstOrDefault(ray => ray.collider != null);
+        if (hit)
+        {
+            if (currentJumpSpeed > 0)
+            {
+                currentJumpSpeed = 0;
+            }
+        }
+
+        #endregion
+
         #region HORIZONTAL CHECK
         float horizontalDirection = Input.GetAxisRaw("Horizontal");
 
@@ -45,7 +102,6 @@ public class player : entity
 
         float backRayDistance = .125f;
         float horizontalrayDistance = (isMoving ? .45f : backRayDistance);
-        float widthOffset = (GetComponent<BoxCollider2D>().size.x / 2);
         Vector3 currentForwardDirection = Vector2.right * horizontalDirection;
         Vector3 currentBackwardDirection = Vector2.right * -horizontalDirection;
 
@@ -76,43 +132,12 @@ public class player : entity
         #endregion
         RaycastHit2D forwardHit = frontWallRaycasts.FirstOrDefault(ray => ray.collider != null);
         RaycastHit2D backwardHit = backWallRaycasts.FirstOrDefault(ray => ray.collider != null);
-        Vector2 newPosition = transform.position;
+
         if (forwardHit)
             newPosition = new Vector2(forwardHit.point.x + (widthOffset + (isMoving ? .125f : .06125f)) * (-horizontalDirection), transform.position.y);
         else if (backwardHit)
             newPosition = new Vector2(backwardHit.point.x + (widthOffset + (.06125f)) * (horizontalDirection), transform.position.y);
         transform.position = newPosition;
-        #endregion
-        
-        #region VERTICAL CHECKS
-        //Vector3 moveVector = Vector3.up * -1 * gravityDown * Time.deltaTime;
-        float verticalRayDistance = 1.15f;
-
-        RaycastHit2D[] floorRaycasts = new RaycastHit2D[]
-        {
-            Physics2D.Raycast(transform.position + (Vector3.up * .5f), Vector2.down, verticalRayDistance, terrainLayer),
-            Physics2D.Raycast(transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset*.9f), Vector2.down, verticalRayDistance, terrainLayer),
-            Physics2D.Raycast(transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset*.9f), Vector2.down, verticalRayDistance, terrainLayer)
-        };
-        verticalRayDistance = .125f;
-        float verticalOffset = 1.75f;
-        RaycastHit2D[] ceilingRaycasts = new RaycastHit2D[]
-        {
-            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset), Vector2.up, verticalRayDistance, terrainLayer),
-            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset*.9f), Vector2.up, verticalRayDistance, terrainLayer),
-            Physics2D.Raycast(transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset*.9f), Vector2.up, verticalRayDistance, terrainLayer)
-        };
-        #region Debug Vertical Collisions
-        //Show Floor Collision Checks
-        Debug.DrawLine(transform.position + (Vector3.up * .5f), transform.position + (Vector3.up * .5f) + (Vector3.down * verticalRayDistance), Color.red);
-        Debug.DrawLine(transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * .5f) - Vector3.right * (widthOffset * .9f) + (Vector3.down * verticalRayDistance), Color.red);
-        Debug.DrawLine(transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * .5f) + Vector3.right * (widthOffset * .9f) + (Vector3.down * verticalRayDistance), Color.red);
-        //Show Ceiling Collision Checks
-        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset), transform.position + (Vector3.up * verticalOffset) + (Vector3.up * verticalRayDistance), Color.red);
-        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * verticalOffset) - Vector3.right * (widthOffset * .9f) + (Vector3.up * verticalRayDistance), Color.red);
-        Debug.DrawLine(transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset * .9f), transform.position + (Vector3.up * verticalOffset) + Vector3.right * (widthOffset * .9f) + (Vector3.up * verticalRayDistance), Color.red);
-
-        #endregion
         #endregion
 
     }
