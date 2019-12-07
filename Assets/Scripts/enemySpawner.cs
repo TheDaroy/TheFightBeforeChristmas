@@ -11,7 +11,7 @@ public class SubWave
     public int spawnLocation;
 
    
-    public entity[] enemies;
+    public Enemy[] enemies;
     
 
 }
@@ -24,7 +24,7 @@ public class Wave
 
     
 }
-[System.Serializable]
+
 public class EnemySpawner : MonoBehaviour
 {
     public Spawnlocations spawnLocationList;
@@ -35,11 +35,12 @@ public class EnemySpawner : MonoBehaviour
     int enemyIndex = 0;
     bool waveCleared;
     float subSpawntimer;
-
-
+    
     public float downTimeTime = 60;
     float downTimeTimer = 0;
 
+    public Transform curves;
+    public Transform target;
 
     private void Update()
     {
@@ -111,7 +112,7 @@ public class EnemySpawner : MonoBehaviour
         if (subSpawntimer >= waves[currentWave].timeBetweenSubWaves)
         {
 
-            entity temp;
+            Enemy temp;
             
             for (int i = 0; i < waves[currentWave].subWaves[currentSubWave].enemies.Length; i++)
             {
@@ -121,6 +122,9 @@ public class EnemySpawner : MonoBehaviour
                    , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
                    , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
                     temp.index = enemyIndex;
+                    temp.curve = curves.GetChild(waves[currentWave].subWaves[currentSubWave].spawnLocation).GetComponent<BezierCurve>();
+                    temp.towerTarget = target;
+                    temp.SetTarget(target);
                     enemyIndex++;
                 }
                 

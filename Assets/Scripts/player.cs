@@ -21,6 +21,7 @@ public class player : Character
         {
             Jump();
         }
+        //if (Input.GetKeyDown())
 
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
@@ -157,7 +158,11 @@ public class player : Character
 
     private void Fire()
     {
-        ;
+        if(arsenal[currentWeapon].shotType == ShotType.Shotgun)
+        {
+
+        }
+        attackCooldownTime = arsenal[currentWeapon].fireRate;
     }
 
     void LookAtMouse()
