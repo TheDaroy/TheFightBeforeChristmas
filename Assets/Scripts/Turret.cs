@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+public class Turret : entity
 {
     
     List<entity> enemiesInRange = new List<entity>();
     entity currentTarget;
     public GameObject projectile;
+    public TurretPlatform platform;
+    
 
     public float fireRate;
     float fireTimer;
@@ -40,6 +42,11 @@ public class Turret : MonoBehaviour
         }
         LookAtClosestTarget();
         Fire();
+
+        if (health <= 0)
+        {
+            platform.activeTurret = false;
+        }
     }
 
     void Fire()
