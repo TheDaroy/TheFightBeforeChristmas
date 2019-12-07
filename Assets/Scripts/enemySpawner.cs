@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
     int currentWave;
     int currentSubWave;
 
-
+    int enemyIndex = 0;
     bool waveCleared;
     float subSpawntimer;
 
@@ -43,19 +43,28 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        WaveDeathCheck();
+        if (waves.Length > 0)
+        {
+            WaveDeathCheck();
+        }
+       
         if (waveCleared)
         {
             DownTime();
         }
-        SubDowntime(); 
+
+        if (waves.Length > 0)
+        {
+            SubDowntime();
+        }
+       
     }
 
 
  
     void WaveDeathCheck()
     {
-
+        
         for (int i = 0; i < waves[currentWave].subWaves.Length; i++)
         {
             for (int x = 0; x < waves[currentWave].subWaves[i].enemies.Length; x++)
@@ -101,13 +110,20 @@ public class EnemySpawner : MonoBehaviour
         subSpawntimer = subSpawntimer + Time.deltaTime;
         if (subSpawntimer >= waves[currentWave].timeBetweenSubWaves)
         {
-            entity temp;
 
+            entity temp;
+            
             for (int i = 0; i < waves[currentWave].subWaves[currentSubWave].enemies.Length; i++)
             {
-                temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i]
-                    , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
-                    , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
+                if (waves[currentWave].subWaves[currentSubWave].enemies[i])
+                {
+                    temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i]
+                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
+                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
+                    temp.index = enemyIndex;
+                    enemyIndex++;
+                }
+                
             }
             currentSubWave++;
             subSpawntimer = 0;

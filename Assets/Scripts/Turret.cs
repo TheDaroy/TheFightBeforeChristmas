@@ -31,7 +31,21 @@ public class Turret : entity
     {
         if (collision.tag == "Enemy")
         {
-            enemiesInRange.Remove(collision.transform.GetComponent<entity>());
+        Debug.Log("Exit");
+
+            entity temp = collision.GetComponent<entity>();
+            for (int i = 0; i < enemiesInRange.Count; i++)
+            {
+                if (enemiesInRange[i].index == temp.index)
+                {
+                    
+                    if (currentTarget == enemiesInRange[i])
+                    {
+                        currentTarget = null;
+                    }
+                    enemiesInRange.Remove(enemiesInRange[i]);
+                }
+            }
         }
     }
     private void Update()
@@ -41,7 +55,11 @@ public class Turret : entity
             enemiesInRange.Remove(currentTarget);
         }
         LookAtClosestTarget();
-        Fire();
+        if (currentTarget)
+        {
+            Fire();
+        }
+        Debug.Log(currentTarget);
 
         if (health <= 0)
         {
