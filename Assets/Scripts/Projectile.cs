@@ -8,23 +8,27 @@ public class Projectile : MonoBehaviour
     public float damage = 1; 
     private void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (transform.tag == "PlayerProjectile")
         {
-            if (collision.collider.tag == "Enemy")
+            if (collision.tag == "Enemy")
             {
-              //  collision.collider.GetComponent<entity>.health - damage;
+                collision.GetComponent<entity>().ApplyDamage(damage);
+                Destroy(gameObject);
             }
-            
+
         }
         else
         {
-            if (collision.collider.tag == "Player")
+            if (collision.tag == "Player")
             {
-                //  collision.collider.GetComponent<entity>.health - damage;
+                collision.GetComponent<entity>().ApplyDamage(damage);
+                Destroy(gameObject);
             }
         }
     }
