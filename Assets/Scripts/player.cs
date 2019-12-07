@@ -140,7 +140,7 @@ public class player : Character
         jumping = true;
         currentJumpSpeed = jumpSpeed;
     }
-    void AddGold(int gold)
+    public void AddGold(int gold)
     {
         gold += goldAmount;
     }
