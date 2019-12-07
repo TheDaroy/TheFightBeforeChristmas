@@ -30,7 +30,7 @@ public class TurretPlatform : MonoBehaviour
         {
             GameObject temp = Instantiate(turretPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation);
             activeTurret = true;
-            temp.transform.GetComponent<Turret>().platform = this;
+            temp.transform.GetChild(0).GetComponent<Turret>();
         }
         //if (Input.GetKeyDown(KeyCode.F))
         //{

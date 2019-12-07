@@ -59,7 +59,7 @@ public class Turret : entity
         {
             Fire();
         }
-        Debug.Log(currentTarget);
+        Debug.Log(projectile);
 
         if (health <= 0)
         {

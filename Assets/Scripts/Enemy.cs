@@ -11,7 +11,7 @@ public class Enemy : Character
 
     public Transform towerTarget;
     private Transform currentTarget;
-
+    public GameObject gold;
     public BezierCurve curve;
     public float bezierTime = 0;
     public Vector3 offset;
@@ -129,6 +129,7 @@ public class Enemy : Character
 
     public override void OnDeath()
     {
+        Instantiate(gold, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

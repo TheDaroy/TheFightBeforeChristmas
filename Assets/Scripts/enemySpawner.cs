@@ -125,7 +125,8 @@ public class EnemySpawner : MonoBehaviour
 
                     float offSet = Random.Range(-10, 10);
                     Vector3 test = new Vector3(offSet, 0, 0);
-                    Vector2 spawnPoint =  new Vector2(spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.x, spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.y + offSet);
+                    Vector2 spawnPoint =  new Vector2(spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.x+offSet, spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.y);
+                    Debug.Log(spawnPoint);
                     temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject,spawnPoint,
                     spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
 

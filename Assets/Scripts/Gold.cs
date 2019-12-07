@@ -6,6 +6,8 @@ public class Gold : MonoBehaviour
 {
     public int value = 1;
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -14,4 +16,5 @@ public class Gold : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }
