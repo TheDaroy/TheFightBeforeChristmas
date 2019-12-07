@@ -30,6 +30,9 @@ public class entity : MonoBehaviour
             currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
         }
     }
-    
+    public void ApplyDamage(float damage)
+    {
+        health -= damage;
+    }
 
 }

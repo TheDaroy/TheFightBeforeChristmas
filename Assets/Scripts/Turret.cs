@@ -7,7 +7,7 @@ public class Turret : MonoBehaviour
     
     List<entity> enemiesInRange = new List<entity>();
     entity currentTarget;
-   public GameObject projectile;
+    public GameObject projectile;
 
     public float fireRate;
     float fireTimer;
