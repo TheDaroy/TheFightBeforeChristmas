@@ -13,6 +13,9 @@ public class Enemy : Character
     private Transform currentTarget;
 
     public BezierCurve curve;
+    public float bezierTime = 0;
+
+    private float attackRange;
 
     public override void Start()
     {
@@ -21,8 +24,12 @@ public class Enemy : Character
         jumping = true;
         currentTarget = towerTarget;
         bezierTime = 0;
-        if(flying)
+        if (flying)
             transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime);
+        if (GetComponentInChildren<CircleCollider2D>())
+            attackRange = GetComponentInChildren<CircleCollider2D>().radius;
+        else
+            attackRange = 1.5f;
     }
 
     public override void Update()
@@ -31,11 +38,11 @@ public class Enemy : Character
 
         if (attackCooldownTime > 0)
             attackCooldownTime -= Time.deltaTime;
+        HandleStates();
         if (bezierTime > 1)
             bezierTime = 1;
         else if (bezierTime < 0)
             bezierTime = 0;
-        HandleStates();
     }
 
     public void SetTarget(Transform target)
@@ -57,9 +64,7 @@ public class Enemy : Character
                 break;
         }
     }
-    public float bezierTime = 0;
-    float curveX;
-    float curveY;
+
     void Walk()
     {
         if (currentTarget == null) {
@@ -90,6 +95,7 @@ public class Enemy : Character
         else
         {
             bezierTime += movementSpeed * Time.deltaTime;
+
             transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime);
         }
 
@@ -114,7 +120,7 @@ public class Enemy : Character
 
     bool CheckProximity(Transform target)
     {
-        return (Vector2.Distance(transform.position, currentTarget.transform.position) < 1.5f);
+        return (Vector2.Distance(transform.position, currentTarget.transform.position) < attackRange);
     }
     Vector3 BezierPosition(Vector3 s, Vector3 st, Vector3 et, Vector3 e, float t)
     {

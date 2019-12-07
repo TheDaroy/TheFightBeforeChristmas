@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  health: 0
   index: 0
 --- !u!1 &220105878
 GameObject:
@@ -506,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPoint: {x: -54.258057, y: 8.554895, z: 0}
-  endPoint: {x: -0.7908478, y: 6.9040785, z: 0}
+  endPoint: {x: -0.5699525, y: 2.7586384, z: 0}
   startTangent: {x: -29.551348, y: 21.021023, z: 0}
   endTangent: {x: -24.856232, y: -1.1075954, z: 0}
 --- !u!4 &924711622
@@ -824,7 +825,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.575}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 7.59
 --- !u!1 &1582518403
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,7 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPoint: {x: 54.25806, y: 8.554895, z: 0}
-  endPoint: {x: 0.7908478, y: 6.9040785, z: 0}
+  endPoint: {x: 0.7908478, y: 2.758638, z: 0}
   startTangent: {x: 29.55135, y: 21.021023, z: 0}
   endTangent: {x: 24.85623, y: -1.1075954, z: 0}
 --- !u!1 &1617497013
@@ -1185,7 +1186,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1204,6 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  health: 0
   index: 0
   movementSpeed: 0.1
   attackCooldownDuration: 0.5
@@ -1223,6 +1225,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2226080534059376702, guid: 7422ecd781567654f8527369ceba9c1d,
+        type: 3}
+      propertyPath: arsenal.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226080534059376702, guid: 7422ecd781567654f8527369ceba9c1d,
+        type: 3}
+      propertyPath: arsenal.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 03f31efdb2d9651468986be5334edb71,
+        type: 2}
     - target: {fileID: 2226080534059376703, guid: 7422ecd781567654f8527369ceba9c1d,
         type: 3}
       propertyPath: m_LocalPosition.x

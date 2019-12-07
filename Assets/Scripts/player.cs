@@ -7,6 +7,9 @@ public class player : Character
 {
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
+    public List<Weapon> arsenal;
+
+    private int currentWeapon;
     public override void Start()
     {
         base.Start();
@@ -148,5 +151,9 @@ public class player : Character
     {
         gold += goldAmount;
     }
-    
+
+    private void Fire()
+    {
+        ;
+    }
 }
