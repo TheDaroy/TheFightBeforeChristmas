@@ -7,9 +7,9 @@ public class player : Character
 {
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
-    void Start()
+    public override void Start()
     {
-
+        base.Start();
     }
 
     public override void Update()

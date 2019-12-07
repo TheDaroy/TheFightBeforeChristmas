@@ -13,7 +13,10 @@ public class Character : entity
     protected float jumpDecreaseSpeed = 18;
 
     protected bool jumping;
-    
+
+    public float attackCooldownDuration = .5f;
+    protected float attackCooldownTime;
+
     public virtual void Update()
     {
         if (jumping)

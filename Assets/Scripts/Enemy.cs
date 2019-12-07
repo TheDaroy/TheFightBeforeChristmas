@@ -11,9 +11,10 @@ public class Enemy : Character
 
     public Transform towerTarget;
     private Transform currentTarget;
-    
-    void Start()
+
+    public override void Start()
     {
+        base.Start();
         state = EnemyState.Walk;
         jumping = true;
         currentTarget = towerTarget;
@@ -73,6 +74,14 @@ public class Enemy : Character
 
     void Attack()
     {
-        //if (currentTarget)
+        if (attackCooldownTime > 0)
+        {
+            entity currentEntity = currentTarget.GetComponent<entity>();
+            if (currentEntity)
+            {
+                currentEntity.ApplyDamage(20);
+                attackCooldownTime = attackCooldownDuration;
+            }
+        }
     }
 }
