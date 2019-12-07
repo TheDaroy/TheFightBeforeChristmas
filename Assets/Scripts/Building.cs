@@ -10,6 +10,7 @@ public class Building : entity
     public GameObject levelPrefab;
     public GameObject levelSpawnLocation;
     public Building mainBuilding;
+    int sortingOrder = 0;
 
     public float levelHealthIncrease = 500;
     public override void Start()
@@ -51,7 +52,8 @@ public class Building : entity
             levelHealthIncrease += maxHealth;
             health = maxHealth;
             levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
-            temp.GetComponent<SpriteRenderer>().sortingOrder
+            temp.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            sortingOrder--;
         }
 
 
