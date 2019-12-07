@@ -21,7 +21,8 @@ public class player : Character
         {
             Jump();
         }
-        //if (Input.GetKeyDown())
+        if (Input.GetMouseButton(0))
+            Fire();
 
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
@@ -158,25 +159,26 @@ public class player : Character
 
     private void Fire()
     {
-        if(arsenal[currentWeapon].shotType == ShotType.Shotgun)
+        if (attackCooldownTime > 0)
+            return;
+        if (arsenal[currentWeapon].shotType == ShotType.Shotgun)
         {
 
         }
         attackCooldownTime = arsenal[currentWeapon].fireRate;
+        Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, weaponArm.transform.rotation);
     }
 
     void LookAtMouse()
     {
-        var dir = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition) - weaponArm.transform.position;
+        Vector3 dir = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition) - weaponArm.transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         weaponArm.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        if (angle > 90 || angle < -90)
-        {
-            Vector3 targetAngle = transform.eulerAngles + 180f * Vector3.up;
-            transform.eulerAngles = targetAngle;
-        }
+        if (dir.x < 0)
+            transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+        else if (dir.x > 0)
+            transform.GetChild(0).localScale = new Vector3(1, 1, 1);
         
-      
     }
 }
