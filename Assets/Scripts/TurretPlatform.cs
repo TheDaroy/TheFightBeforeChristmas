@@ -26,19 +26,19 @@ public class TurretPlatform : MonoBehaviour
     }
     private void Update()
     {
-        //if (Player && Input.GetKeyDown(KeyCode.X) && Player.goldAmount >= cost && activeTurret == false)
-        //{
-        //    GameObject temp = Instantiate(turretPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation);
-        //    activeTurret = true;
-        //    temp.transform.GetComponent<Turret>().platform = this;
-        //}
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Player && Input.GetKeyDown(KeyCode.X) && Player.goldAmount >= cost && activeTurret == false)
         {
-            Debug.Log("F");
-            GameObject temp = Instantiate(turretPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation) ;
+            GameObject temp = Instantiate(turretPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation);
             activeTurret = true;
-            Debug.Log("S");
             temp.transform.GetComponent<Turret>().platform = this;
         }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    Debug.Log("F");
+        //    GameObject temp = Instantiate(turretPrefab, spawnLocation.transform.position, spawnLocation.transform.rotation) ;
+        //    activeTurret = true;
+        //    Debug.Log("S");
+        //    temp.transform.GetComponent<Turret>().platform = this;
+        //}
     }
 }
