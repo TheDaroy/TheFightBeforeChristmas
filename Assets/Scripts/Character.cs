@@ -24,5 +24,7 @@ public class Character : entity
             transform.position += Vector3.up * Time.deltaTime * currentJumpSpeed;// GRAVITY) ;
             currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
         }
+        if (attackCooldownTime > 0)
+            attackCooldownTime -= Time.deltaTime;
     }
 }

@@ -23,6 +23,9 @@ public class Enemy : Character
     public override void Update()
     {
         //base.Update();
+
+        if (attackCooldownTime > 0)
+            attackCooldownTime -= Time.deltaTime;
         HandleStates();
     }
 
@@ -68,20 +71,27 @@ public class Enemy : Character
             
         }
         transform.position = move;
-        if (Vector2.Distance(transform.position, currentTarget.transform.position) < 1.5f)
+        if (CheckProximity(currentTarget))
             state = EnemyState.Attack;
     }
 
     void Attack()
     {
-        if (attackCooldownTime > 0)
+        if (attackCooldownTime <= 0)
         {
             entity currentEntity = currentTarget.GetComponent<entity>();
             if (currentEntity)
             {
                 currentEntity.ApplyDamage(20);
                 attackCooldownTime = attackCooldownDuration;
+                if (!CheckProximity(currentTarget))
+                    state = EnemyState.Walk;
             }
         }
+    }
+
+    bool CheckProximity(Transform target)
+    {
+        return (Vector2.Distance(transform.position, currentTarget.transform.position) < 1.5f);
     }
 }

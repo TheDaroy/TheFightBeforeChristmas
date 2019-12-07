@@ -887,7 +887,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  health: 0
   movementSpeed: 4
+  attackCooldownDuration: 0.5
   flying: 0
   towerTarget: {fileID: 1399311496}
 --- !u!1001 &2226080534854020279

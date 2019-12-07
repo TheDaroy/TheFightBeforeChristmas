@@ -25,7 +25,7 @@ public class player : Character
         CheckCollision();
         base.Update();
 
-        Debug.Log("Am I Jumping?:" + jumping);
+        //Debug.Log("Am I Jumping?:" + jumping);
     }
     
     void CheckCollision()

@@ -6,7 +6,7 @@ using UnityEngine;
 public class entity : MonoBehaviour
 {
     public float maxHealth = 100;
-    private float health;
+    public float health;
 
     public virtual void Start()
     {
