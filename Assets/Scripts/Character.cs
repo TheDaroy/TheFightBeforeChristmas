@@ -13,7 +13,10 @@ public class Character : entity
     protected float jumpDecreaseSpeed = 18;
 
     protected bool jumping;
-    
+
+    public float attackCooldownDuration = .5f;
+    protected float attackCooldownTime;
+
     public virtual void Update()
     {
         if (jumping)
@@ -21,5 +24,7 @@ public class Character : entity
             transform.position += Vector3.up * Time.deltaTime * currentJumpSpeed;// GRAVITY) ;
             currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
         }
+        if (attackCooldownTime > 0)
+            attackCooldownTime -= Time.deltaTime;
     }
 }

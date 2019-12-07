@@ -7,9 +7,9 @@ public class player : Character
 {
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
-    void Start()
+    public override void Start()
     {
-
+        base.Start();
     }
 
     public override void Update()
@@ -25,7 +25,7 @@ public class player : Character
         CheckCollision();
         base.Update();
 
-        Debug.Log("Am I Jumping?:" + jumping);
+        //Debug.Log("Am I Jumping?:" + jumping);
     }
     
     void CheckCollision()

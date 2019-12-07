@@ -96,9 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  health: 0
+  movementSpeed: 6
+  attackCooldownDuration: 0.5
   terrainLayer:
     serializedVersion: 2
     m_Bits: 256
+  goldAmount: 0
 --- !u!61 &2226080534059376701
 BoxCollider2D:
   m_ObjectHideFlags: 0
