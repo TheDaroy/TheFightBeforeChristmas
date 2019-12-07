@@ -16,6 +16,7 @@ public class Building : entity
     {
         base.Start();
         mainBuilding = this;
+       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,6 +51,7 @@ public class Building : entity
             levelHealthIncrease += maxHealth;
             health = maxHealth;
             levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
+            temp.GetComponent<SpriteRenderer>().sortingOrder
         }
 
 
