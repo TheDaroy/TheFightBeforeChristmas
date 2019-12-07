@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 181214764}
   m_Layer: 8
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -742,6 +742,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2226080534059376702, guid: 7422ecd781567654f8527369ceba9c1d,
+        type: 3}
+      propertyPath: arsenal.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2226080534059376702, guid: 7422ecd781567654f8527369ceba9c1d,
+        type: 3}
+      propertyPath: arsenal.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f08a67c97210424cb8c0d9a95400077,
+        type: 2}
     - target: {fileID: 2226080534059376703, guid: 7422ecd781567654f8527369ceba9c1d,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -29,6 +29,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Terrain")
+            Destroy(gameObject);
         if (transform.tag == "PlayerProjectile")
         {
             if (collision.tag == "Enemy")
