@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Building : entity
 {
     public float cost;
@@ -9,9 +9,14 @@ public class Building : entity
     player Player;
     public GameObject levelPrefab;
     public GameObject levelSpawnLocation;
+    public Building mainBuilding;
 
     public float levelHealthIncrease = 500;
-
+    public override void Start()
+    {
+        base.Start();
+        mainBuilding = this;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -26,7 +31,7 @@ public class Building : entity
             Player = null;
         }
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -45,6 +50,12 @@ public class Building : entity
             levelHealthIncrease += maxHealth;
             health = maxHealth;
             levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
+        }
+
+
+        if (Dead)
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

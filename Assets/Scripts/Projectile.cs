@@ -30,6 +30,14 @@ public class Projectile : MonoBehaviour
                 collision.GetComponent<entity>().ApplyDamage(damage);
                 Destroy(gameObject);
             }
+            if (collision.tag == "Building")
+            {
+                collision.GetComponent<Building>().ApplyDamage(damage);
+            }
+            if (collision.tag == "BuildingLevel")
+            {
+                collision.GetComponent<BuildingLevel>().mainBuilding.ApplyDamage(damage);
+            }
         }
     }
 }

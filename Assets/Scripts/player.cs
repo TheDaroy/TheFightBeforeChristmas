@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class player : Character
 {
     [SerializeField] private LayerMask terrainLayer;
@@ -26,6 +26,10 @@ public class player : Character
         base.Update();
 
         //Debug.Log("Am I Jumping?:" + jumping);
+        if (Dead)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
     
     void CheckCollision()
@@ -144,4 +148,5 @@ public class player : Character
     {
         gold += goldAmount;
     }
+    
 }
