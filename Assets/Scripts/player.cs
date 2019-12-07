@@ -6,6 +6,7 @@ using UnityEngine;
 public class player : entity
 {
     [SerializeField] private LayerMask terrainLayer;
+    public int goldAmount = 0;
     void Start()
     {
 
