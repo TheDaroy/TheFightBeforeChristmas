@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class player : entity
+public class player : Character
 {
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
