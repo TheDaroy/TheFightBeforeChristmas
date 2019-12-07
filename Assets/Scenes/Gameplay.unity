@@ -362,11 +362,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b14532320bfde4b99ea3a0c3e72c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocationList: {fileID: 0}
-  waves: []
+  spawnLocationList: {fileID: 203165956}
+  waves:
+  - timeBetweenSubWaves: 5
+    subWaves:
+    - spawnLocation: 0
+      enemies:
+      - {fileID: 9060699752817008161, guid: eb99594cd9e9b0647ba13c9f0bd2fd46, type: 3}
+      - {fileID: 9060699752817008161, guid: eb99594cd9e9b0647ba13c9f0bd2fd46, type: 3}
+      - {fileID: 9060699752817008161, guid: eb99594cd9e9b0647ba13c9f0bd2fd46, type: 3}
+  - timeBetweenSubWaves: 2.5
+    subWaves: []
+  - timeBetweenSubWaves: 0
+    subWaves: []
   downTimeTime: 60
-  curves: {fileID: 0}
-  target: {fileID: 0}
+  curves: {fileID: 1166808191}
+  target: {fileID: 643904602}
 --- !u!114 &203165956
 MonoBehaviour:
   m_ObjectHideFlags: 0

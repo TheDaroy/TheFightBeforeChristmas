@@ -196,6 +196,11 @@ public class player : Character
             transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
         else if (dir.x > 0)
             transform.GetChild(0).localScale = new Vector3(1, 1, 1);
-        
+
+    }
+
+    public override void OnDeath()
+    {
+        enabled = false;
     }
 }

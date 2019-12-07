@@ -99,6 +99,11 @@ public class Turret : entity
                     currentTarget = enemiesInRange[i].GetComponent<entity>();
                 }
             }
-        }   
+        }
+    }
+
+    public override void OnDeath()
+    {
+        Destroy(gameObject);
     }
 }

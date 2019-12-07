@@ -55,11 +55,10 @@ public class Building : entity
             temp.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
             sortingOrder--;
         }
+    }
 
-
-        if (Dead)
-        {
-            SceneManager.LoadScene(0);
-        }
+    public override void OnDeath()
+    {
+        SceneManager.LoadScene(0);
     }
 }

@@ -27,4 +27,9 @@ public class Character : entity
         if (attackCooldownTime > 0)
             attackCooldownTime -= Time.deltaTime;
     }
+
+    public override void OnDeath()
+    {
+
+    }
 }

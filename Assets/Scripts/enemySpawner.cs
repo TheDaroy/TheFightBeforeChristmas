@@ -120,9 +120,12 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log(currentSubWave);
             for (int i = 0; i < waves[currentWave].subWaves[currentSubWave].enemies.Length; i++)
             {
-                if (waves[currentWave].subWaves[currentSubWave].enemies[i])
+                if (waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject)
                 {
-                    temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject
+                    temp = Instantiate(waves[currentWave].
+                        subWaves[currentSubWave].
+                        enemies[i].
+                        gameObject
                    , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
                    , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
                     Enemy tempE = temp.GetComponent<Enemy>();
