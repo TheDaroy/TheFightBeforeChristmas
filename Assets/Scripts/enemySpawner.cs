@@ -11,7 +11,7 @@ public class SubWave
     public int spawnLocation;
 
    
-    public entity[] enemies;
+    public Enemy[] enemies;
     
 
 }
@@ -27,19 +27,20 @@ public class Wave
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Spawnlocations[] spawnLocationList;
+    public Spawnlocations spawnLocationList;
     public Wave[] waves;
-    int currentWave;
-    int currentSubWave;
+    int currentWave=0;
+    int currentSubWave=0;
 
     int enemyIndex = 0;
-    bool waveCleared;
+    bool waveCleared = true;
     float subSpawntimer;
-
-
+    
     public float downTimeTime = 60;
     float downTimeTimer = 0;
 
+    public Transform curves;
+    public Transform target;
 
     private void Update()
     {
@@ -55,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (waves.Length > 0)
         {
+           
             SubDowntime();
         }
        
@@ -84,8 +86,10 @@ public class EnemySpawner : MonoBehaviour
         subSpawntimer = subSpawntimer + Time.deltaTime;
         if (subSpawntimer >= waves[currentWave].timeBetweenSubWaves)
         {
-            subSpawntimer = 0;
+            Debug.Log("test");
+            
             SpawnSubwave();
+            subSpawntimer = 0;
         }
 
     }
@@ -107,20 +111,29 @@ public class EnemySpawner : MonoBehaviour
 
  void SpawnSubwave()
     {
+        Debug.Log("test2");
         subSpawntimer = subSpawntimer + Time.deltaTime;
-        if (subSpawntimer >= waves[currentWave].timeBetweenSubWaves)
+        if (subSpawntimer >= waves[currentWave].timeBetweenSubWaves && currentSubWave < waves[currentWave].subWaves.Length)
         {
 
-            entity temp;
-            
+            GameObject temp;
+            Debug.Log(currentSubWave);
             for (int i = 0; i < waves[currentWave].subWaves[currentSubWave].enemies.Length; i++)
             {
-                if (waves[currentWave].subWaves[currentSubWave].enemies[i])
+                if (waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject)
                 {
-                    temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i]
-                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
-                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
-                    temp.index = enemyIndex;
+                    temp = Instantiate(waves[currentWave].
+                        subWaves[currentSubWave].
+                        enemies[i].
+                        gameObject
+                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
+                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
+                    Enemy tempE = temp.GetComponent<Enemy>();
+
+                    tempE.index = enemyIndex;
+                    tempE.curve = curves.GetChild(waves[currentWave].subWaves[currentSubWave].spawnLocation).GetComponent<BezierCurve>();
+                    tempE.towerTarget = target;
+                    tempE.SetTarget(target);
                     enemyIndex++;
                 }
                 

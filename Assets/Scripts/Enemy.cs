@@ -126,4 +126,9 @@ public class Enemy : Character
     {
         return (((-s + 3 * (st - et) + e) * t + (3 * (s + et) - 6 * st)) * t + 3 * (st - s)) * t + s;
     }
+
+    public override void OnDeath()
+    {
+        Destroy(gameObject);
+    }
 }

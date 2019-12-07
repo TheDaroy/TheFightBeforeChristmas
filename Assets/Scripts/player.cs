@@ -8,7 +8,7 @@ public class player : Character
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
     public List<Weapon> arsenal;
-
+    public GameObject weaponArm;
     private int currentWeapon;
     public override void Start()
     {
@@ -21,6 +21,20 @@ public class player : Character
         {
             Jump();
         }
+        if (Input.GetMouseButton(0))
+            Fire();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentWeapon = 0;
+            attackCooldownDuration = arsenal[currentWeapon].fireRate;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentWeapon = 1;
+            attackCooldownDuration = arsenal[currentWeapon].fireRate;
+        }
+
 
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
@@ -33,6 +47,9 @@ public class player : Character
         {
             SceneManager.LoadScene(0);
         }
+
+
+        LookAtMouse();
     }
     
     void CheckCollision()
@@ -154,6 +171,36 @@ public class player : Character
 
     private void Fire()
     {
-        ;
+        if (attackCooldownTime > 0)
+            return;
+        if (arsenal[currentWeapon].shotType == ShotType.Shotgun)
+        {
+            var anglesOffset = weaponArm.transform.rotation;
+            anglesOffset *= Quaternion.Euler(0, 0, 10);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, anglesOffset);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, weaponArm.transform.rotation);
+            anglesOffset *= Quaternion.Euler(0, 0, -20);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, anglesOffset);
+        }
+        attackCooldownTime = attackCooldownDuration;
+        Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, weaponArm.transform.rotation);
+    }
+
+    void LookAtMouse()
+    {
+        Vector3 dir = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition) - weaponArm.transform.position;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        weaponArm.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        if (dir.x < 0)
+            transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+        else if (dir.x > 0)
+            transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+
+    }
+
+    public override void OnDeath()
+    {
+        enabled = false;
     }
 }

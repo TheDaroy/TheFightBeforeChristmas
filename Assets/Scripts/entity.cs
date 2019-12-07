@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class entity : MonoBehaviour
+public abstract class entity : MonoBehaviour
 {
     public float maxHealth = 100;
     public float health;
@@ -21,7 +21,12 @@ public class entity : MonoBehaviour
     {
         health -= damage;
         if (Dead)
+        {
             health = 0;
+            OnDeath();
+        }
     }
+
+    public abstract void OnDeath();
 
 }

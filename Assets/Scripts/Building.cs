@@ -10,12 +10,14 @@ public class Building : entity
     public GameObject levelPrefab;
     public GameObject levelSpawnLocation;
     public Building mainBuilding;
+    int sortingOrder = 0;
 
     public float levelHealthIncrease = 500;
     public override void Start()
     {
         base.Start();
         mainBuilding = this;
+       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,12 +52,13 @@ public class Building : entity
             levelHealthIncrease += maxHealth;
             health = maxHealth;
             levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
+            temp.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            sortingOrder--;
         }
+    }
 
-
-        if (Dead)
-        {
-            SceneManager.LoadScene(0);
-        }
+    public override void OnDeath()
+    {
+        SceneManager.LoadScene(0);
     }
 }

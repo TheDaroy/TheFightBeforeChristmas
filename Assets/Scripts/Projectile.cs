@@ -5,15 +5,32 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 1;
-    public float damage = 1; 
+    public float damage = 1;
+
+    private float lifeDuration = 5;
+    private float lifeTime;
+
+    private void Start()
+    {
+        lifeTime = lifeDuration;
+    }
+
     private void Update()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (lifeTime > 0)
+        {
+            lifeTime -= Time.deltaTime;
+            if (lifeTime <= 0)
+                Destroy(gameObject);
+        }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "Terrain")
+            Destroy(gameObject);
         if (transform.tag == "PlayerProjectile")
         {
             if (collision.tag == "Enemy")
