@@ -375,7 +375,7 @@ MonoBehaviour:
     - spawnLocation: 2
       enemies:
       - {fileID: 9060699752817008161, guid: eb99594cd9e9b0647ba13c9f0bd2fd46, type: 3}
-  downTimeTime: 60
+  downTimeTime: 59
   curves: {fileID: 1166808191}
   target: {fileID: 1218366067}
 --- !u!114 &203165956
