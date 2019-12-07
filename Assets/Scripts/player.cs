@@ -162,9 +162,16 @@ public class player : Character
 
     void LookAtMouse()
     {
-        var dir = Input.mousePosition - weaponArm.transform.position;
+        var dir = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition) - weaponArm.transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         weaponArm.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Debug.Log(angle);
+
+        if (angle > 90 || angle < -90)
+        {
+            Vector3 targetAngle = transform.eulerAngles + 180f * Vector3.up;
+            transform.eulerAngles = targetAngle;
+        }
+        
+      
     }
 }
