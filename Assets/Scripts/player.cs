@@ -8,7 +8,7 @@ public class player : Character
     [SerializeField] private LayerMask terrainLayer;
     public int goldAmount = 0;
     public List<Weapon> arsenal;
-
+    public GameObject weaponArm;
     private int currentWeapon;
     public override void Start()
     {
@@ -33,6 +33,9 @@ public class player : Character
         {
             SceneManager.LoadScene(0);
         }
+
+
+        LookAtMouse();
     }
     
     void CheckCollision()
@@ -155,5 +158,13 @@ public class player : Character
     private void Fire()
     {
         ;
+    }
+
+    void LookAtMouse()
+    {
+        var dir = Input.mousePosition - weaponArm.transform.position;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        weaponArm.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Debug.Log(angle);
     }
 }

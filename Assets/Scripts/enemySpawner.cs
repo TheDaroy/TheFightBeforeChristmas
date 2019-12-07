@@ -24,10 +24,10 @@ public class Wave
 
     
 }
-
+[System.Serializable]
 public class EnemySpawner : MonoBehaviour
 {
-    public Spawnlocations[] spawnLocationList;
+    public Spawnlocations spawnLocationList;
     public Wave[] waves;
     int currentWave;
     int currentSubWave;
@@ -118,8 +118,8 @@ public class EnemySpawner : MonoBehaviour
                 if (waves[currentWave].subWaves[currentSubWave].enemies[i])
                 {
                     temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i]
-                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
-                   , spawnLocationList[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
+                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
+                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
                     temp.index = enemyIndex;
                     enemyIndex++;
                 }
