@@ -12,12 +12,17 @@ public class Enemy : Character
     public Transform towerTarget;
     private Transform currentTarget;
 
+    public BezierCurve curve;
+
     public override void Start()
     {
         base.Start();
         state = EnemyState.Walk;
         jumping = true;
         currentTarget = towerTarget;
+        bezierTime = 0;
+        if(flying)
+            transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime);
     }
 
     public override void Update()
@@ -26,6 +31,10 @@ public class Enemy : Character
 
         if (attackCooldownTime > 0)
             attackCooldownTime -= Time.deltaTime;
+        if (bezierTime > 1)
+            bezierTime = 1;
+        else if (bezierTime < 0)
+            bezierTime = 0;
         HandleStates();
     }
 
@@ -48,29 +57,42 @@ public class Enemy : Character
                 break;
         }
     }
-
+    public float bezierTime = 0;
+    float curveX;
+    float curveY;
     void Walk()
     {
         if (currentTarget == null) {
             Debug.Log(gameObject.name + " got no target, man");
             return;
         }
-        Vector3 move = transform.position;
-        if (transform.position.x < currentTarget.position.x) {
-            move += (Vector3.right * movementSpeed * Time.deltaTime);
+        if (!flying)
+        {
+            Vector3 move = transform.position;
+            if (transform.position.x < currentTarget.position.x)
+            {
+                move += (Vector3.right * movementSpeed * Time.deltaTime);
 
-            if (move.x > currentTarget.position.x)
-                move = new Vector2(currentTarget.position.x, move.y);
-            
+                if (move.x > currentTarget.position.x)
+                    move = new Vector2(currentTarget.position.x, move.y);
+
+            }
+            else if (transform.position.x > currentTarget.position.x)
+            {
+                move += (Vector3.left * movementSpeed * Time.deltaTime);
+
+                if (move.x < currentTarget.position.x)
+                    move = new Vector2(currentTarget.position.x, move.y);
+
+            }
+            transform.position = move;
         }
-        else if (transform.position.x > currentTarget.position.x) {
-            move += (Vector3.left * movementSpeed * Time.deltaTime);
-            
-            if (move.x < currentTarget.position.x)
-                move = new Vector2(currentTarget.position.x, move.y);
-            
+        else
+        {
+            bezierTime += movementSpeed * Time.deltaTime;
+            transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime);
         }
-        transform.position = move;
+
         if (CheckProximity(currentTarget))
             state = EnemyState.Attack;
     }
@@ -93,5 +115,9 @@ public class Enemy : Character
     bool CheckProximity(Transform target)
     {
         return (Vector2.Distance(transform.position, currentTarget.transform.position) < 1.5f);
+    }
+    Vector3 BezierPosition(Vector3 s, Vector3 st, Vector3 et, Vector3 e, float t)
+    {
+        return (((-s + 3 * (st - et) + e) * t + (3 * (s + et) - 6 * st)) * t + 3 * (st - s)) * t + s;
     }
 }
