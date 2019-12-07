@@ -122,14 +122,15 @@ public class EnemySpawner : MonoBehaviour
             {
                 if (waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject)
                 {
-                    temp = Instantiate(waves[currentWave].
-                        subWaves[currentSubWave].
-                        enemies[i].
-                        gameObject
-                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position
-                   , spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
-                    Enemy tempE = temp.GetComponent<Enemy>();
 
+                    float offSet = Random.Range(-10, 10);
+                    Vector3 test = new Vector3(offSet, 0, 0);
+                    Vector2 spawnPoint =  new Vector2(spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.x, spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.position.y + offSet);
+                    temp = Instantiate(waves[currentWave].subWaves[currentSubWave].enemies[i].gameObject,spawnPoint,
+                    spawnLocationList.spawnlocations[waves[currentWave].subWaves[currentSubWave].spawnLocation].transform.rotation);
+
+                    Enemy tempE = temp.GetComponent<Enemy>();
+                    tempE.offset = test;
                     tempE.index = enemyIndex;
                     tempE.curve = curves.GetChild(waves[currentWave].subWaves[currentSubWave].spawnLocation).GetComponent<BezierCurve>();
                     tempE.towerTarget = target;

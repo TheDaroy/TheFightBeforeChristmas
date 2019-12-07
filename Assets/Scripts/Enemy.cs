@@ -14,7 +14,7 @@ public class Enemy : Character
 
     public BezierCurve curve;
     public float bezierTime = 0;
-
+    public Vector3 offset;
     private float attackRange;
 
     public override void Start()
@@ -96,7 +96,7 @@ public class Enemy : Character
         {
             bezierTime += movementSpeed * Time.deltaTime;
 
-            transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime);
+            transform.position = BezierPosition(curve.startPoint, curve.startTangent, curve.endTangent, curve.endPoint, bezierTime) + offset;
         }
 
         if (CheckProximity(currentTarget))
