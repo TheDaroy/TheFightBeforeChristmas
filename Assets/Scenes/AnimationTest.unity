@@ -215,8 +215,8 @@ GameObject:
   - component: {fileID: 2086962298}
   - component: {fileID: 2086962297}
   m_Layer: 0
-  m_Name: EnemyElf
-  m_TagString: Untagged
+  m_Name: PlayerIdle
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
