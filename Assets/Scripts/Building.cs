@@ -45,16 +45,16 @@ public class Building : entity
             health = maxHealth;
             levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
         }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            GameObject temp = Instantiate(levelPrefab, levelSpawnLocation.transform.position, levelSpawnLocation.transform.rotation);
-            temp.transform.GetComponent<BuildingLevel>().mainBuilding = this;
-            levelHealthIncrease += maxHealth;
-            health = maxHealth;
-            levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
-            temp.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
-            sortingOrder--;
-        }
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    GameObject temp = Instantiate(levelPrefab, levelSpawnLocation.transform.position, levelSpawnLocation.transform.rotation);
+        //    temp.transform.GetComponent<BuildingLevel>().mainBuilding = this;
+        //    levelHealthIncrease += maxHealth;
+        //    health = maxHealth;
+        //    levelSpawnLocation = temp.GetComponent<BuildingLevel>().levelSpawnLocation;
+        //    temp.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+        //    sortingOrder--;
+        //}
     }
 
     public override void OnDeath()
