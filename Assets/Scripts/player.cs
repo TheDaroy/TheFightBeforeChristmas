@@ -5,20 +5,13 @@ using UnityEngine;
 
 public class player : entity
 {
-    private float jumpSpeed = 9;
-    private float currentJumpSpeed;
-    private float jumpDecreaseSpeed = 18;
-
-    private bool jumping;
-
     [SerializeField] private LayerMask terrainLayer;
-
     void Start()
     {
 
     }
 
-    void Update()
+    public override void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !jumping)
         {
@@ -28,17 +21,12 @@ public class player : entity
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
 
-
         CheckCollision();
-        if (jumping)
-        {
-            transform.position += Vector3.up * Time.deltaTime * currentJumpSpeed;// GRAVITY) ;
-            currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
-        }
+        base.Update();
 
         Debug.Log("Am I Jumping?:" + jumping);
     }
-
+    
     void CheckCollision()
     {
         Vector2 newPosition = transform.position;
@@ -83,11 +71,11 @@ public class player : entity
             jumping = false;
             currentJumpSpeed = 0;
         }
-        /*else if (floorRaycasts.All(ray => ray.collider == null))
+        else if (floorRaycasts.All(ray => ray.collider == null))
         {
             if (!jumping)
                 jumping = true;
-        }*/
+        }
         hit = ceilingRaycasts.FirstOrDefault(ray => ray.collider != null);
         if (hit)
         {
@@ -128,11 +116,11 @@ public class player : entity
         Debug.DrawLine(transform.position + (currentForwardDirection * .2f) + (Vector3.up * .05f), transform.position + (Vector3.up * .05f) + (currentForwardDirection * horizontalrayDistance), Color.red);
         Debug.DrawLine(transform.position + (currentForwardDirection * .2f) + (Vector3.up * 1f), transform.position + (Vector3.up * 1f) + (currentForwardDirection * horizontalrayDistance), Color.red);
         Debug.DrawLine(transform.position + (currentForwardDirection * .2f) + (Vector3.up * 1.7f), transform.position + (Vector3.up * 1.7f) + (currentForwardDirection * horizontalrayDistance), Color.red);
-        //*//Show Front Wall Collision Checks
+        //Show Front Wall Collision Checks
         Debug.DrawLine(transform.position + (currentBackwardDirection * .2f) + (Vector3.up * .05f), transform.position + (Vector3.up * .05f) + (currentBackwardDirection * horizontalrayDistance), Color.red);
         Debug.DrawLine(transform.position + (currentBackwardDirection * .2f) + (Vector3.up * 1f), transform.position + (Vector3.up * 1f) + (currentBackwardDirection * horizontalrayDistance), Color.red);
         Debug.DrawLine(transform.position + (currentBackwardDirection * .2f) + (Vector3.up * 1.7f), transform.position + (Vector3.up * 1.7f) + (currentBackwardDirection * horizontalrayDistance), Color.red);
-        //*/
+        //
         #endregion
         RaycastHit2D forwardHit = frontWallRaycasts.FirstOrDefault(ray => ray.collider != null);
         RaycastHit2D backwardHit = backWallRaycasts.FirstOrDefault(ray => ray.collider != null);
@@ -145,7 +133,7 @@ public class player : entity
         #endregion
 
     }
-
+    
     void Jump()
     {
         jumping = true;
