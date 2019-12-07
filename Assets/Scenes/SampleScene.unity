@@ -155,7 +155,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.7, y: 1.12}
     newSize: {x: 1.7, y: 1.12}
     adaptiveTilingThreshold: 0.5
@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8afe42d33e2b8046baea9ad01dc53bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!212 &100062043
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -509,9 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b14532320bfde4b99ea3a0c3e72c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocationList: []
-  waves: []
-  downTimeTime: 60
 --- !u!61 &1222477810
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -771,19 +769,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b14532320bfde4b99ea3a0c3e72c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocationList: []
-  waves:
-  - timeBetweenSubWaves: 5
-    subWaves: []
-  - timeBetweenSubWaves: 5
-    subWaves: []
-  - timeBetweenSubWaves: 5
-    subWaves: []
-  - timeBetweenSubWaves: 5
-    subWaves: []
-  - timeBetweenSubWaves: 5
-    subWaves: []
-  downTimeTime: 60
 --- !u!1 &1681074486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1020,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b99c6a5bf560f144a9420da0278b289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  projectile: {fileID: 5304066998684964871, guid: 6d3c268c9382a034bab72c20e2000880,
+    type: 3}
+  platform: {fileID: 0}
+  fireRate: 0
 --- !u!1001 &4592493587573659209
 PrefabInstance:
   m_ObjectHideFlags: 0

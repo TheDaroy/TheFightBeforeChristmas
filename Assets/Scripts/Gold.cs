@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Gold : MonoBehaviour
 {
-    public float value = 1;
+    public int value = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            collision.GetComponent<player>().goldAmount
+            collision.GetComponent<player>().AddGold(value);
+            Destroy(gameObject);
         }
     }
 }

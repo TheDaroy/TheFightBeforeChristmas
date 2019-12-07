@@ -36,7 +36,7 @@ public class Turret : entity
     }
     private void Update()
     {
-        if (currentTarget.Dead)
+        if (currentTarget && currentTarget.Dead)
         {
             enemiesInRange.Remove(currentTarget);
         }
@@ -62,6 +62,8 @@ public class Turret : entity
     }
     void LookAtClosestTarget()
     {
+        if (!currentTarget)
+            return;
         var dir = currentTarget.transform.position - transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
