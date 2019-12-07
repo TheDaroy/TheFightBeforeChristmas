@@ -28,13 +28,13 @@ public class player : entity
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
 
+
+        CheckCollision();
         if (jumping)
         {
             transform.position += Vector3.up * Time.deltaTime * currentJumpSpeed;// GRAVITY) ;
             currentJumpSpeed += Time.deltaTime * -1 * jumpDecreaseSpeed;
         }
-
-        CheckCollision();
 
         Debug.Log("Am I Jumping?:" + jumping);
     }
@@ -45,7 +45,6 @@ public class player : entity
         float widthOffset = (GetComponent<BoxCollider2D>().size.x / 2);
 
         #region VERTICAL CHECKS
-        //Vector3 moveVector = Vector3.up * -1 * gravityDown * Time.deltaTime;
         float ceilingRayDistance = .5f;
         float floorRayDistance = .125f;
 
@@ -84,6 +83,11 @@ public class player : entity
             jumping = false;
             currentJumpSpeed = 0;
         }
+        /*else if (floorRaycasts.All(ray => ray.collider == null))
+        {
+            if (!jumping)
+                jumping = true;
+        }*/
         hit = ceilingRaycasts.FirstOrDefault(ray => ray.collider != null);
         if (hit)
         {
