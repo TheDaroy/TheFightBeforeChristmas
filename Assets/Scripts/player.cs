@@ -24,6 +24,18 @@ public class player : Character
         if (Input.GetMouseButton(0))
             Fire();
 
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentWeapon = 0;
+            attackCooldownDuration = arsenal[currentWeapon].fireRate;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentWeapon = 1;
+            attackCooldownDuration = arsenal[currentWeapon].fireRate;
+        }
+
+
         Vector3 horizontalMovement = Vector2.right * Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime;
         transform.position += horizontalMovement;
 
@@ -163,9 +175,14 @@ public class player : Character
             return;
         if (arsenal[currentWeapon].shotType == ShotType.Shotgun)
         {
-
+            var anglesOffset = weaponArm.transform.rotation;
+            anglesOffset *= Quaternion.Euler(0, 0, 10);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, anglesOffset);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, weaponArm.transform.rotation);
+            anglesOffset *= Quaternion.Euler(0, 0, -20);
+            Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, anglesOffset);
         }
-        attackCooldownTime = arsenal[currentWeapon].fireRate;
+        attackCooldownTime = attackCooldownDuration;
         Instantiate(arsenal[currentWeapon].projectile, transform.GetChild(1).position, weaponArm.transform.rotation);
     }
 
